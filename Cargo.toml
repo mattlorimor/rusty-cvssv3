@@ -1,0 +1,11 @@
+[package]
+name = "cvssv3"
+version = "0.1.0"
+authors = ["Matthew Lorimor <mattlorimor@gmail.com>"]
+description = "A CVSS v3.0 library"
+homepage = "https://github.com/mattlorimor/rusty-cvssv3"
+repository = "https://github.com/mattlorimor/rusty-cvssv3"
+readme = "README.md"
+keywords = ["cvss", "cvssv3", "cve"]
+
+[dependencies]
