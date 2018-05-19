@@ -653,17 +653,17 @@ fn test_round_up() {
 #[test]
 fn test_qualitative_severity_rating() {
     let _test = CVSSv3 {
-        attack_vector:          enums::AttackVector::Local,
-        attack_complexity:      enums::AttackComplexity::Low,
-        privileges_required:    enums::PrivilegesRequired::Low,
-        user_interaction:       enums::UserInteraction::None,
-        scope:                  enums::Scope::Changed,
-        confidentiality_impact: enums::Impact::None,
-        integrity_impact:       enums::Impact::Low,
-        availability_impact:    enums::Impact::High,
-        exploit_code_maturity:  enums::ExploitCodeMaturity::Unproven,
-        modified_scope:         enums::Scope::Unchanged,
-        remediation_level:      enums::RemediationLevel::OfficialFix,
+        attack_vector:             enums::AttackVector::Local,
+        attack_complexity:         enums::AttackComplexity::Low,
+        privileges_required:       enums::PrivilegesRequired::Low,
+        user_interaction:          enums::UserInteraction::None,
+        scope:                     enums::Scope::Changed,
+        confidentiality_impact:    enums::Impact::None,
+        integrity_impact:          enums::Impact::Low,
+        availability_impact:       enums::Impact::High,
+        exploit_code_maturity:     enums::ExploitCodeMaturity::Unproven,
+        modified_scope:            enums::Scope::Unchanged,
+        remediation_level:         enums::RemediationLevel::OfficialFix,
         modified_user_interaction: enums::UserInteraction::Required,
         ..Default::default()
     };
@@ -674,17 +674,17 @@ fn test_qualitative_severity_rating() {
 #[test]
 fn test_to_vector_string() {
     let _test = CVSSv3 {
-        attack_vector:          enums::AttackVector::Local,
-        attack_complexity:      enums::AttackComplexity::Low,
-        privileges_required:    enums::PrivilegesRequired::Low,
-        user_interaction:       enums::UserInteraction::None,
-        scope:                  enums::Scope::Changed,
-        confidentiality_impact: enums::Impact::None,
-        integrity_impact:       enums::Impact::Low,
-        availability_impact:    enums::Impact::High,
-        exploit_code_maturity:  enums::ExploitCodeMaturity::Unproven,
-        modified_scope:         enums::Scope::Unchanged,
-        remediation_level:      enums::RemediationLevel::OfficialFix,
+        attack_vector:             enums::AttackVector::Local,
+        attack_complexity:         enums::AttackComplexity::Low,
+        privileges_required:       enums::PrivilegesRequired::Low,
+        user_interaction:          enums::UserInteraction::None,
+        scope:                     enums::Scope::Changed,
+        confidentiality_impact:    enums::Impact::None,
+        integrity_impact:          enums::Impact::Low,
+        availability_impact:       enums::Impact::High,
+        exploit_code_maturity:     enums::ExploitCodeMaturity::Unproven,
+        modified_scope:            enums::Scope::Unchanged,
+        remediation_level:         enums::RemediationLevel::OfficialFix,
         modified_user_interaction: enums::UserInteraction::Required,
         ..Default::default()
     };
