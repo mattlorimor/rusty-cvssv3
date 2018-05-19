@@ -412,6 +412,10 @@ impl CVSSv3 {
             }
         }
     }
+
+    pub fn qualitative_severity_rating(&self) -> enums::QualitativeSeverityRating {
+        enums::QualitativeSeverityRating::from_quantitative_rating(self.environmental_score())
+    }
 }
 
 trait FromVectorString {
@@ -644,6 +648,27 @@ fn test_round_up() {
     assert_eq!(1.0.round_up(0), 1.0);
     assert_eq!(1.0.round_up(1), 1.0);
     assert_eq!(1.0.round_up(2), 1.00);
+}
+
+#[test]
+fn test_qualitative_severity_rating() {
+    let _test = CVSSv3 {
+        attack_vector:          enums::AttackVector::Local,
+        attack_complexity:      enums::AttackComplexity::Low,
+        privileges_required:    enums::PrivilegesRequired::Low,
+        user_interaction:       enums::UserInteraction::None,
+        scope:                  enums::Scope::Changed,
+        confidentiality_impact: enums::Impact::None,
+        integrity_impact:       enums::Impact::Low,
+        availability_impact:    enums::Impact::High,
+        exploit_code_maturity:  enums::ExploitCodeMaturity::Unproven,
+        modified_scope:         enums::Scope::Unchanged,
+        remediation_level:      enums::RemediationLevel::OfficialFix,
+        modified_user_interaction: enums::UserInteraction::Required,
+        ..Default::default()
+    };
+
+    assert_eq!(_test.qualitative_severity_rating(), enums::QualitativeSeverityRating::Medium);
 }
 
 #[test]

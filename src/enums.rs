@@ -586,13 +586,58 @@ fn test_report_confidence_get_letter() {
     assert_eq!(ReportConfidence::Unknown.get_letter(), REPORT_CONFIDENCE_UNKNOWN_LETTER);
 }
 
-#[derive(PartialEq,PartialOrd)]
+#[derive(Debug,PartialEq,PartialOrd,)]
 pub enum QualitativeSeverityRating {
     None,
     Low,
     Medium,
     High,
     Critical
+}
+
+trait InRange {
+    fn in_range(&self, begin: Self, end: Self) -> bool;
+}
+
+impl InRange for f32 {
+    fn in_range(&self, begin: f32, end: f32) -> bool {
+        *self >= begin && * self <= end
+    }
+}
+
+impl QualitativeSeverityRating {
+    pub fn from_quantitative_rating(quantitative_rating: f32) -> QualitativeSeverityRating {
+        match quantitative_rating {
+            x if x == 0.0              => QualitativeSeverityRating::None,
+            x if x.in_range(0.1, 3.9)  => QualitativeSeverityRating::Low,
+            x if x.in_range(4.0, 6.9)  => QualitativeSeverityRating::Medium,
+            x if x.in_range(7.0, 8.9)  => QualitativeSeverityRating::High,
+            x if x.in_range(9.0, 10.0) => QualitativeSeverityRating::Critical,
+            _                          => QualitativeSeverityRating::None
+        }
+    }
+}
+
+#[test]
+fn test_qualitative_severity_rating() {
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(0.0), QualitativeSeverityRating::None);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(0.1), QualitativeSeverityRating::Low);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(0.2), QualitativeSeverityRating::Low);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(3.8), QualitativeSeverityRating::Low);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(3.9), QualitativeSeverityRating::Low);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(4.0), QualitativeSeverityRating::Medium);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(4.1), QualitativeSeverityRating::Medium);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(6.8), QualitativeSeverityRating::Medium);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(6.9), QualitativeSeverityRating::Medium);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(7.0), QualitativeSeverityRating::High);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(7.1), QualitativeSeverityRating::High);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(8.8), QualitativeSeverityRating::High);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(8.9), QualitativeSeverityRating::High);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(9.0), QualitativeSeverityRating::Critical);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(9.1), QualitativeSeverityRating::Critical);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(9.9), QualitativeSeverityRating::Critical);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(10.0), QualitativeSeverityRating::Critical);
+    assert_eq!(QualitativeSeverityRating::from_quantitative_rating(10.1), QualitativeSeverityRating::None);
 }
 
 #[derive(PartialEq,PartialOrd)]
@@ -649,10 +694,4 @@ fn test_security_requirement_get_letter() {
     assert_eq!(SecurityRequirement::High.get_letter(), SECURITY_REQUIREMENT_HIGH_LETTER);
     assert_eq!(SecurityRequirement::Medium.get_letter(), SECURITY_REQUIREMENT_MEDIUM_LETTER);
     assert_eq!(SecurityRequirement::Low.get_letter(), SECURITY_REQUIREMENT_LOW_LETTER);
-}
-
-#[derive(PartialEq,PartialOrd)]
-pub enum CvssVersion {
-    V3,
-    V2
 }
